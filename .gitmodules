@@ -1,0 +1,3 @@
+[submodule "ACT"]
+	path = ACT
+	url = https://github.com/facebookresearch/ACT.git
