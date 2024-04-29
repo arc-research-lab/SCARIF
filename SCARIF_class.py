@@ -9,12 +9,18 @@ class predictor:
         return
     
     def setup(self, cpu_core_num, dram_size, ssd_size, hdd_size, year):
-        self.carbon = self.K_CPU*cpu_core_num +\
-            self.K_DRAM*dram_size +\
-            self.K_SSD*ssd_size +\
-            self.K_HDD*hdd_size +\
-            self.K_year*(year - 2000) +\
-            self.D
+        # self.carbon = self.K_CPU*cpu_core_num +\
+        #     self.K_DRAM*dram_size +\
+        #     self.K_SSD*ssd_size +\
+        #     self.K_HDD*hdd_size +\
+        #     self.K_year*(year - 2000) +\
+        #     self.D
+        self.CPU_cost = self.K_CPU*cpu_core_num
+        self.DRAM_cost = self.K_DRAM*dram_size
+        self.SSD_cost = self.K_SSD*ssd_size
+        self.HDD_cost = self.K_HDD*hdd_size
+        self.year_cost = self.K_year*(year - 2000)
+        self.carbon = self.CPU_cost + self.DRAM_cost + self.SSD_cost + self.HDD_cost + self.year_cost + self.D
         
 def HP_predictor():
     return predictor(D=-1100)
