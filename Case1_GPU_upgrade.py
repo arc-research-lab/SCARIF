@@ -14,7 +14,7 @@
 
 # performance metric:
 # server 2 has a 1.61x throughput than server 1 when performing inference of deit-t
-# --> compare 1x server 1 with 0.62x server 2
+# --> compare 1x server 1 running at full utilization with 1x server 2 runing at 0.6 utilization
 
 # operational carbon
 # system2 running at 0.62 utilization
