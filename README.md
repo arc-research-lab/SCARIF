@@ -26,7 +26,7 @@ git clone https://github.com/arc-research-lab/SCARIF.git --recurse-submodules
 ```
 
 ### SCARIF command line tool
-![input and output of SCARIF](figures/Picture1.png)
+![input and output of SCARIF](figures/SCARIF_IO.png)
 To estimate the carbon cost of a server, the user may consider the following steps.
 
 - Step1: prepare the required server configs. Here the needed configs include: The total core number of CPUs, the size of DRAM(GB), the size of SSD(GB), the size of HDD(GB), and the release date(in years).
