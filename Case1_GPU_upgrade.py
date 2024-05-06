@@ -1,5 +1,6 @@
+#The upgrade version for SCARIF v0.2
+# - the upgraded flow simplifies the code length a lot
 
-# Reproduce of Case study 1 in SCARIF
 # setups:
 # 1.(2017 server) DellR740 + 2x Intel Xeon 8180 CPU + 64GB DRAM + 1000GB HDD + 1x Nvidia V100
 # 2.(2020 server) DellR750 + 2x Intel Xeon 8375 CPU + 64GB DRAM + 1000GB HDD + 1x Nvidia A100
@@ -20,92 +21,23 @@
 # system2 running at 0.62 utilization
 # kWh to KgCO2e: TX: 0.438, AZ: 0.395, CA: 0.234, NY: 0.188 KgCO2e/Kwh
 
-#----------------------------------------------ACT part for CPU and GPU chip carbon cost-----------------------------------------------#
-# estimating the chip carbon for CPUs and GPUs using ACT
-import sys
-import os
-sys.path.append("./ACT")
-os.chdir("./ACT")
-
-#######
-# setup
-#######
-from ACT.logic_model  import Fab_Logic
-debug = False
-xeon_8180 = 6.98 #cm2
-xeon_8375 = 6.60 #cm2
-v100 = 8.15 #cm2
-a100 = 8.26 #cm2
-ic_yield = 0.875
-
-#######
-# init ACT tool
-#######
-# the key difference between setup in V100 and 8375 are because V100 are released earlier, so we use the old tech node
-# the package carbon cost are ignored since the package numbers are not reported, and this cost is small
-xeon_8180_chip = Fab_Logic(gpa  = "95",
-                        carbon_intensity = "src_coal",
-                        process_node = 14,
-                        fab_yield=ic_yield)
-Xeon_8375_chip = Fab_Logic(gpa  = "95",
-                        carbon_intensity = "src_coal",
-                        process_node = 10,
-                        fab_yield=ic_yield)#we use 10 nm as the tech node since ACT doesn't include the 12 nm 
-v100_chip = Fab_Logic(gpa  = "95",
-                        carbon_intensity = "src_coal",
-                        process_node = 14,
-                        fab_yield=ic_yield)#we use 14 nm as the tech node since ACT doesn't include the 12 nm
-a100_chip = Fab_Logic(gpa  = "95",
-                        carbon_intensity = "src_coal",
-                        process_node = 7,
-                        fab_yield=ic_yield)
-
-xeon_8180_chip.set_area(xeon_8180)
-Xeon_8375_chip.set_area(xeon_8375)
-v100_chip.set_area(v100)
-a100_chip.set_area(a100)
-
-#######
-# get chip carbon
-#######
-xeon_8180_carbon = xeon_8180_chip.get_carbon()/1000
-xeon_8375_carbon = Xeon_8375_chip.get_carbon()/1000
-v100_carbon = v100_chip.get_carbon()/1000
-a100_carbon = a100_chip.get_carbon()/1000
-# print("----- chip carbon cost from ACT -----")
-print("8180:",xeon_8180_carbon,"\n8375:",xeon_8375_carbon,"\nv100:",v100_carbon,"\na100:",a100_carbon)
-os.chdir("..")
 #----------------------------------------------use SCARIF to estimate system cost-----------------------------------------------#
 #######
 # get system carbon w/o Acc.
 #######
 import SCARIF_class
 sys1 = SCARIF_class.Dell_predictor()
-sys1.setup(2*28,64,0,1000,2017)
+sys1.setup(2*28,64,0,1000,2017,acc_tech_node=14,acc_chip_area=815)
 sys1_no_acc_carbon = sys1.carbon
 
 sys2 = SCARIF_class.Dell_predictor()
-sys2.setup(2*32,64,0,1000,2020)
+sys2.setup(2*32,64,0,1000,2020,acc_tech_node=7,acc_chip_area=826)
 sys2_no_acc_carbon = sys2.carbon
 
-print("----- system carbon cost w/o Acc. -----")
-print("system 1:",sys1_no_acc_carbon," KgCO2e\nsystem 2:",sys2_no_acc_carbon, " KgCO2e")
+print("----- system carbon costs -----")
+print("system 1:\n",sys1,"\nsystem 2:\n",sys2)
 
-
-#######
-# get system carbon w/ Acc.
-#######
-sys1_acc_carbon = sys1.CPU_cost*v100_carbon/(xeon_8180_carbon*2)
-sys2_acc_carbon = sys2.CPU_cost*a100_carbon/(xeon_8375_carbon*2)
-print("----- system-level Acc. carbon cost -----")
-# print(sys1.CPU_cost,sys2.CPU_cost)
-print("v100 in system 1:",sys1_acc_carbon," KgCO2e\na100 in system 2:",sys2_acc_carbon," KgCO2e")
-
-sys1_total_carbon = sys1_acc_carbon + sys1_no_acc_carbon
-sys2_total_carbon = sys2_acc_carbon + sys2_no_acc_carbon
-print("----- system carbon cost w/ Acc. -----")
-# print(sys1.CPU_cost,sys2.CPU_cost)
-print("system 1:",sys1_total_carbon," KgCO2e\nsystem 2:",sys2_total_carbon, " KgCO2e")
+sys2_total_carbon = sys2.total_carbon
 
 #----------------------------------------------operational power and break-even time-----------------------------------------------#
 #######

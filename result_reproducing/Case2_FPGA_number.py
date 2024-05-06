@@ -1,3 +1,4 @@
+# Reproduce of Case study 1 in SCARIF
 # setups:
 # 1.(CPU server) DellR740 + 2x Intel Xeon 8180 CPU + 64GB DRAM + 1000GB HDD 
 # 2.(GPU server) DellR740 + 2x Intel Xeon 8180 CPU + 64GB DRAM + 1000GB HDD + 1x Nvidia V100
@@ -22,6 +23,54 @@
 # system2 running at 0.62 utilization
 # kWh to KgCO2e: TX: 0.438, AZ: 0.395, CA: 0.234, NY: 0.188 KgCO2e/Kwh
 
+#----------------------------------------------ACT part for CPU and GPU chip carbon cost-----------------------------------------------#
+# estimating the chip carbon for CPUs and GPUs using ACT
+import sys
+import os
+sys.path.append("./ACT")
+os.chdir("./ACT")
+
+#######
+# setup
+#######
+from ACT.logic_model  import Fab_Logic
+debug = False
+xeon_8180 = 6.98 #cm2
+v100 = 8.15 #cm2
+zcu102 = 2.45 #cm2
+
+ic_yield = 0.875
+
+#######
+# init ACT tool
+#######
+xeon_8180_chip = Fab_Logic(gpa  = "95",
+                        carbon_intensity = "src_coal",
+                        process_node = 14,
+                        fab_yield=ic_yield)
+v100_chip = Fab_Logic(gpa  = "95",
+                        carbon_intensity = "src_coal",
+                        process_node = 14,
+                        fab_yield=ic_yield)#we use 14 nm as the tech node since ACT doesn't include the 12 nm
+zcu102_chip = Fab_Logic(gpa  = "95",
+                        carbon_intensity = "src_coal",
+                        process_node = 14,
+                        fab_yield=ic_yield)#we use 14 nm as the tech node since ACT doesn't include the 16 nm
+
+xeon_8180_chip.set_area(xeon_8180)
+v100_chip.set_area(v100)
+zcu102_chip.set_area(zcu102)
+
+#######
+# get chip carbon
+#######
+xeon_8180_carbon = xeon_8180_chip.get_carbon()/1000
+v100_carbon = v100_chip.get_carbon()/1000
+zcu102_carbon = zcu102_chip.get_carbon()/1000
+# print("----- chip carbon cost from ACT -----")
+print("8180:",xeon_8180_carbon,"\nzcu102:",zcu102_carbon,"\nv100:",v100_carbon)
+os.chdir("..")
+
 #----------------------------------------------use SCARIF to estimate system cost-----------------------------------------------#
 #######
 # get system carbon w/o Acc.
@@ -34,17 +83,11 @@ r740_no_acc_carbon = r740.carbon
 print("----- system carbon cost w/o Acc. -----")
 print("r740 server carbon w/o acc:",r740_no_acc_carbon," KgCO2e")
 
-gpu_pred = SCARIF_class.acc_preditor()
-fpga_pred = SCARIF_class.acc_preditor()
-
-gpu_pred.setup(14,815)
-fpga_pred.setup(14,245)
-
 #######
 # get system carbon w/o Acc.
 #######
-gpu_carbon = gpu_pred.acc_system_carbon
-fpga_carbon = fpga_pred.acc_system_carbon
+gpu_carbon = r740.CPU_cost*v100_carbon/(xeon_8180_carbon*2)
+fpga_carbon = r740.CPU_cost*zcu102_carbon/(xeon_8180_carbon*2)
 print("----- system-level Acc. carbon cost -----")
 # print(sys1.CPU_cost,sys2.CPU_cost)
 print("v100 in system 1:",gpu_carbon," KgCO2e\nzcu102 in system 1:",fpga_carbon," KgCO2e")
