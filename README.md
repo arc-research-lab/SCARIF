@@ -10,7 +10,7 @@ SCARIF is a tool to estimate the embodied carbon emissions of data center server
 - For accelerators like GPUs and FPGAs, which doesn't have a similar architecture like CPUs, SCARIF also provides a integration with the [ACT](https://github.com/facebookresearch/ACT) tool. This helps to estimate the server-level carbon cost for servers equipped with accelerators.
 
 - Compared with prior works, SCARIF can give a more accurate estimation for the server-level systems.
-![Performance of SCARIF on 3 different servers](figures/SCARIF_perf.png)
+![Performance of SCARIF on 3 different servers](media/SCARIF_perf.png)
 
 <!-- - By applying the SCARIF on servers of different years, the result suggests that it may takes a much longer period for new servers to 'catch up' with the old ones in terms of total carbon cost.  -->
 
@@ -26,7 +26,7 @@ git clone https://github.com/arc-research-lab/SCARIF.git --recurse-submodules
 ```
 
 ### SCARIF command line tool
-![input and output of SCARIF](figures/SCARIF_IO.png)
+![input and output of SCARIF](media/SCARIF_IO.png)
 To estimate the carbon cost of a server, the user may consider the following steps.
 
 - Step1: prepare the required server configs. Here the needed configs include: The total core number of CPUs, the size of DRAM(GB), the size of SSD(GB), the size of HDD(GB), and the release date(in years).
@@ -41,6 +41,30 @@ python SCARIF.py -c 56 -d 64 -s 0 -hd 1000 -y 2017 --vendor Dell
 python SCARIF.py -c 64 -d 64 -s 0 -hd 1000 -y 2020 -at 10 -aa 826 --vendor Dell
 #profile of Dell R750 with 2x 32-core Xeon 8375 CPU, 64GB DRAM, no SSD, 1TB HDD, and released in 2020,
 #together with 1 A100 with 10nm fab process and 826 mm^2 chip area
+```
+### SCARIF command line tool examples
+- case1: Dell R740 CPU server
+    - ![Dell R740 configs](media/example1.png)
+```shell
+python SCARIF.py -cpu_core_num 44 --dram 32 --ssd 0 --hdd 4800 --year 2017 --vendor Dell
+```
+
+- case2: Dell R740 CPU server with self defined server configs
+    - ![Dell R740 configs](media/example2.png)
+```shell
+python SCARIF.py -c 56 --d 32 --s 2400 --hd 4800 --year 2017 --vendor Dell
+```
+
+- case 3: server with GPUs
+    - ![Dell R740 configs](media/example3.png)
+```shell
+python SCARIF.py -c 56 --d 32 --s 2400 --hd 4800 --year 2017 --vendor Dell -at 14 -aa 1630
+```
+
+- case 4: server with FPGA
+    - ![Dell R740 configs](media/example4.png)
+```shell
+python SCARIF.py -c 56 --d 256 --s 1800 --hd 0 --year 2019 --vendor HP -at 14 -aa 844
 ```
 
 ### SCARIF class
@@ -86,8 +110,30 @@ SCARIF estimate a much larger embodied carbon cost for servers than prior works 
 ### server with FPGAs as accelerators
 The `Case2_FPGA_number.py` shows how SCARIF estimate the carbon costs for server with FPGAs, and estimate the overall carbon costs in different years in the servers' life time.
 
+## Media
+- ISVLSI SCARIF demo video: [youtube video](https://www.youtube.com/watch?v=TZmR5TYUP6k)
+- ISVLSI SCARIF slides: [SCARIF slides](media/ISVLSI24_SCARIF_Final_Slides.pdf)
+
+## Reference
+Please cite SCARIF if it helps your research.
+```
+@inproceedings {isvlsi24scarif,
+  author={Ji, Shixin and Yang, Zhuoping and Cahoon, Stephen and Jones, Alex K and Zhou, Peipei},
+  booktitle={2024 IEEE Computer Society Annual Symposium on VLSI (ISVLSI)}, 
+  title={SCARIF: Towards Carbon Modeling of Cloud Servers with Accelerators}, 
+  year={2024},
+  volume={},
+  number={},
+  pages={1-6},
+  doi={}}
+```
 
 ## Release Notes
+- 2024/07/15
+    - update the README
+        - added a section of examples
+        - added a section of reference
+        - added a section of medias
 - 2024/05/05 SCARIF v0.2
     - update the core class of SCARIF tool
         - the estimation of Acc.'s carbon cost now relies on a fixed baseline, instead of the host servers' CPUs. 
