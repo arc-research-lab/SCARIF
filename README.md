@@ -3,7 +3,7 @@ Principal Investigator: Prof. Peipei Zhou, https://peipeizhou-eecs.github.io/
 
 Ph.D. Students: Shixin Ji (Student Lead), Zhuoping Yang, Xingzhen Chen
 
-Faculty Collaborators: Profs. Jingtong Hu (Pitt), Yiyu Shi (Notre Dame), Alex Jones (Syracuse)
+Faculty Collaborators: Professors Jingtong Hu (Pitt), Yiyu Shi (Notre Dame), Alex Jones (Syracuse)
 
 Student Collaborators: Stephen Cahoon
 
