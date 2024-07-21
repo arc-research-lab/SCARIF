@@ -1,3 +1,13 @@
+# Team
+Principal Investigator: Prof. Peipei Zhou, https://peipeizhou-eecs.github.io/
+
+Ph.D. Students: Shixin Ji (Student Lead), Zhuoping Yang, Xingzhen Chen
+
+Faculty Collaborators: Profs. Jingtong Hu (Pitt), Yiyu Shi (Notre Dame), Alex Jones (Syracuse)
+
+Student Collaborators: Stephen Cahoon
+
+
 # SCARIF v0.2
 ## Overview
 This repo includes the data and codes for SCARIF, the Server Carbon including Accelerator Reporter with Intelligence-based Formulation tool. 
