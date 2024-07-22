@@ -164,5 +164,3 @@ Please cite SCARIF if it helps your research.
     - release the core class of SCARIF tool
     - release the codes used for data extraction 
     - release the codes used for analysis towards CPU-only server setup, CPU+GPU server setup, and CPU+FPGA server setup
- 
-
