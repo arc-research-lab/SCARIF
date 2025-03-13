@@ -137,6 +137,9 @@ Please cite SCARIF if it helps your research.
   pages={1-6},
   doi={}}
 ```
+## 🚀 Thank You for Using SCARIF!!
+### Your support and growing engagement inspire us to continually improve and enhance SCARIF
+<img src="./assets/SCARIF_traffic_plot.png" width="600" />
 
 ## Release Notes
 - 2024/07/15
