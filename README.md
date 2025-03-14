@@ -7,6 +7,12 @@ Faculty Collaborators: Professors Jingtong Hu (Pitt), Yiyu Shi (Notre Dame), Ale
 
 Student Collaborators: Stephen Cahoon
 
+## 🚀 Thank You for Using SCARIF!!
+### Your support and growing engagement inspire us to continually improve and enhance SCARIF
+- **Downloads since 22 Feb 2025:** <!--CLONES-->52<!--/CLONES-->
+- **Views: since 22 Feb 2025:** <!--VIEWS-->383<!--/VIEWS-->
+<img src="./assets/SCARIF_traffic_plot.png" width="600" />
+
 
 # SCARIF v0.2
 ## Overview
@@ -137,12 +143,6 @@ Please cite SCARIF if it helps your research.
   pages={1-6},
   doi={}}
 ```
-## 🚀 Thank You for Using SCARIF!!
-### Your support and growing engagement inspire us to continually improve and enhance SCARIF
-- **Clones:** <!--CLONES-->52<!--/CLONES-->
-- **Views:** <!--VIEWS-->383<!--/VIEWS-->
-<img src="./assets/SCARIF_traffic_plot.png" width="600" />
-
 ## Release Notes
 - 2024/07/15
     - update the README
