@@ -39,7 +39,7 @@ jobs:
       - name: Update total review number
         run: |
           # Extract the second row (Total row) from csv
-          TOTAL_ROW=$(grep "^Total" path/to/data.csv)
+          TOTAL_ROW=$(grep "^Total" https://github.com/arc-research-lab/SCARIF/blob/main/assets/SCARIF_sum.csv)
 
           # Extract Clones and Views using awk
           CLONES=$(echo $TOTAL_ROW | awk -F',' '{print $2}')
