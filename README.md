@@ -139,7 +139,8 @@ Please cite SCARIF if it helps your research.
 ```
 ## 🚀 Thank You for Using SCARIF!!
 ### Your support and growing engagement inspire us to continually improve and enhance SCARIF
-![View CSV](https://github.com/arc-research-lab/SCARIF/blob/main/assets/SCARIF_sum.csv)
+- **Clones:** <!--CLONES-->0<!--/CLONES-->
+- **Views:** <!--VIEWS-->0<!--/VIEWS-->
 <img src="./assets/SCARIF_traffic_plot.png" width="600" />
 
 ## Release Notes
