@@ -36,6 +36,18 @@ jobs:
       - name: Run image generation script
         run: python3 utils/GithubTrafficPlot.py token:${{ secrets.GH_PAT }} utils/repo.txt assets/   # 
 
+      - name: Update total review number
+        run: |
+          # Extract the second row (Total row) from csv
+          TOTAL_ROW=$(grep "^Total" path/to/data.csv)
+
+          # Extract Clones and Views using awk
+          CLONES=$(echo $TOTAL_ROW | awk -F',' '{print $2}')
+          VIEWS=$(echo $TOTAL_ROW | awk -F',' '{print $3}')
+
+          sed -i "s/<!--CLONES-->.*<!--\/CLONES-->/<!--CLONES-->$CLONES<!--\/CLONES-->/" README.md
+          sed -i "s/<!--VIEWS-->.*<!--\/VIEWS-->/<!--VIEWS-->$VIEWS<!--\/VIEWS-->/" README.md
+
       - name: Commit and push generated image
         run: |
           git config --global user.name "github-actions[bot]"
