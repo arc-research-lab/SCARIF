@@ -9,8 +9,8 @@ Student Collaborators: Stephen Cahoon
 
 ## 🚀 Thank You for Using SCARIF!!
 ### Your support and growing engagement inspire us to continually improve and enhance SCARIF
-- **Downloads since 22 Feb 2025:** <!--CLONES-->502<!--/CLONES-->
-- **Views: since 22 Feb 2025:** <!--VIEWS-->789<!--/VIEWS-->
+- **Downloads since 22 Feb 2025:** <!--CLONES-->506<!--/CLONES-->
+- **Views: since 22 Feb 2025:** <!--VIEWS-->798<!--/VIEWS-->
 <img src="./assets/SCARIF_traffic_plot.png" width="600" />
 
 
